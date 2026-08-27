@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111827">
+<title>Cálculo Peso / Milheiro</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827}
+.app{max-width:480px;margin:auto;padding:18px}.card{background:white;border-radius:18px;padding:20px;margin-bottom:15px;box-shadow:0 4px 18px #0001}
+h1{font-size:24px;margin:0 0 6px}.sub{color:#6b7280;margin:0 0 18px}
+label{display:block;font-weight:700;font-size:14px;margin:13px 0 6px}
+input{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px;font-size:17px}
+button{width:100%;border:0;border-radius:11px;padding:14px;font-size:17px;font-weight:700;background:#111827;color:white;margin-top:18px}
+.result{background:#f9fafb;border-radius:12px;padding:15px;margin-top:16px}
+.big{font-size:27px;font-weight:800;margin:5px 0}.muted{color:#6b7280;font-size:13px}
+.row{display:flex;gap:10px}.row>div{flex:1}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="card">
+<h1>📦 Peso / Milheiro</h1>
+<p class="sub">Calculadora baseada na sua planilha.</p>
+
+<label>Comprimento (cm)</label>
+<input id="comp" type="number" step="any" value="210">
+
+<label>Largura (cm)</label>
+<input id="larg" type="number" step="any" value="100">
+
+<label>Espessura (cm)</label>
+<input id="esp" type="number" step="any" value="0.002">
+
+<label>Peso (kg)</label>
+<input id="peso" type="number" step="any" value="30">
+
+<button onclick="calcular()">CALCULAR MILHEIRO</button>
+
+<div class="result">
+<div class="muted">Quantidade calculada</div>
+<div class="big" id="milheiro">—</div>
+<div class="muted" id="unidades">—</div>
+</div>
+</div>
+
+<div class="card">
+<h2>⚖️ Milheiro → Kg</h2>
+<label>Quantidade (milheiro)</label>
+<input id="mil" type="number" step="any" value="1">
+<button onclick="calcularKg()">CALCULAR PESO</button>
+<div class="result">
+<div class="muted">Peso calculado</div>
+<div class="big" id="kg">—</div>
+</div>
+</div>
+</div>
+
+<script>
+function n(id){return parseFloat(document.getElementById(id).value)||0}
+function calcular(){
+ const c=n('comp'), l=n('larg'), e=n('esp'), p=n('peso');
+ if(!c||!l||!e||!p){alert('Preencha todos os campos.');return}
+ const unidades=(p/(c*l*e))*1000;
+ document.getElementById('milheiro').textContent=unidades.toLocaleString('pt-BR',{maximumFractionDigits:2});
+ document.getElementById('unidades').textContent='unidades (conforme a fórmula da planilha)';
+}
+function calcularKg(){
+ const c=n('comp'), l=n('larg'), e=n('esp'), m=n('mil');
+ if(!c||!l||!e||!m){alert('Preencha os campos.');return}
+ const kg=c*l*e*(m*1000)/1000;
+ document.getElementById('kg').textContent=kg.toLocaleString('pt-BR',{maximumFractionDigits:3})+' kg';
+}
+calcular();calcularKg();
+</script>
+</body>
+</html>
